@@ -24,4 +24,8 @@ def send(msg):
 send("Send username")
 user = input()
 send(user)
-send(DISCONNECT_MESSAGE)
+while True: 
+    msg = input()
+    if msg == "!DISCONNECT":
+        print("Disconnecting......")
+    send(msg)

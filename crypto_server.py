@@ -1,6 +1,7 @@
 import socket 
 import threading
 
+
 HEADER = 64
 PORT = 5050
 SERVER = socket.gethostbyname(socket.gethostname())
@@ -23,12 +24,18 @@ def handle_client(conn, addr):
 
             if msg == DISCONNECT_MESSAGE:
                 connected = False
-                
+        
+            if msg == "!DOGECOIN":
+                addCoin("Doge")
+
             print(f"[{addr}] {msg}")
             msg_back = "The following is a list of cryptos avaliable, please pick from the following cryptos followed by a !:"
             conn.send(msg_back.encode(FORMAT))
             conn.send("Test list".encode(FORMAT))
             list_sent = True
+
+        if connected == False:
+            conn.send("Disconnecting....".encode(FORMAT))
     conn.close()
         
 
@@ -40,6 +47,10 @@ def start():
         thread = threading.Thread(target=handle_client, args=(conn, addr))
         thread.start()
         print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
+
+        
+def addCoin(coinname):
+    print(coinname)
 
 
 print("[STARTING] server is starting...")
