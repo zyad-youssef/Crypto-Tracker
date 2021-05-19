@@ -1,4 +1,5 @@
 import socket
+import time
 
 HEADER = 64
 PORT = 5050
@@ -17,15 +18,13 @@ def send(msg):
     send_length += b' ' * (HEADER - len(send_length))
     client.send(send_length)
     client.send(message)
+    #print(client.recv(2048).decode(FORMAT))
+
+while True:
+    send(input())
     print(client.recv(2048).decode(FORMAT))
-
-
-
-send("Send username")
-user = input()
-send(user)
-while True: 
-    msg = input()
-    if msg == "!DISCONNECT":
-        print("Disconnecting......")
-    send(msg)
+    if input() == "!notify":
+        for i in range(60):
+            print(client.recv(2048).decode(FORMAT))
+            client.send("  ")
+        
