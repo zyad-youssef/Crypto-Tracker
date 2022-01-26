@@ -18,13 +18,19 @@ def send(msg):
     send_length += b' ' * (HEADER - len(send_length))
     client.send(send_length)
     client.send(message)
-    #print(client.recv(2048).decode(FORMAT))
-
-while True:
-    send(input())
     print(client.recv(2048).decode(FORMAT))
-    if input() == "!notify":
-        for i in range(60):
-            print(client.recv(2048).decode(FORMAT))
-            client.send("  ")
-        
+
+def startup():
+    print("Enter username")
+    while True:
+        send(input())
+        if(input() == "!notify"):
+            print("notifs on")
+            for x in range(100):
+                print(client.recv(2048).decode(FORMAT))
+                print(client.recv(2048).decode(FORMAT))
+                print(client.recv(2048).decode(FORMAT))
+    
+
+
+startup()
